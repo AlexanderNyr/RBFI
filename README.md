@@ -11,6 +11,7 @@ RBFI - 64-bit firmware with the ability to revert to 32 for backward compatibili
 For the OS to run, the RBFI program has to be at address 0x0100000, and the program needs to get into memory via USB 2
 # Build code:
 **For example : **
+
 `nasm -f bin RBFI_x86.asm -o RBFI.bin`
 # Launch:
 **Bochs:**
