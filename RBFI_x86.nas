@@ -84,25 +84,31 @@ sandy_bri:
   rep stosd
   mov esp,0xFEF0FFFC
   mov ebp,esp  
-;======PCI====== 
+;======PCI======
+   mov dx,0x0CF8
    mov eax,0x8000083E
-   out 0x0CF8,eax
-   in eax,0xCFC
+   out dx,eax
+   mov dx,0x0CFC
+   in eax,dx
    or eax,0x0008
-   out 0x0CFC,eax
+   out dx,eax
 
+   mov dx,0x0CF8
    mov eax,0x8000F880
-   out 0x0CF8,eax
+   out dx,eax
+   mov dx,0x0CFC
    mov eax,0x00700010
-   out 0x0CFC,eax
+   out dx,eax
 
    mov al,0x80
    out 0x70,al
+   mov dx,0x0CF8
    mov eax,0x8000F804
-   out 0x0CF8,eax
-   in eax,0x0CFC
+   out dx,eax
+   mov dx,0x0CFC
+   in eax,dx
    or eax,0x07
-   out 0x0CFC,eax
+   out dx,eax
 ;======MMIO======
 mov eax,0x80000060
 mov dx,0x0CF8
@@ -130,7 +136,7 @@ mov [ecx+0x4000],ebx
 mov [ecx+0x5000],ebx
 mov edx,[ecx+0x4010]
 or edx,1
-mov [ecx+4010],edx
+mov [ecx+0x4010],edx
 jmp loff
 ;======================
 ;======================
@@ -213,7 +219,7 @@ mov [ecx+0x4000],ebx
 mov [ecx+0x5000],ebx
 mov edx,[ecx+0x4010]
 or edx,1
-mov [ecx+4010],edx
+mov [ecx+0x4010],edx
 jmp loff
 ;======================
 ;======================
@@ -405,12 +411,13 @@ mov ebx,[edi+5]
 push ebx
 mov esi,0xE0000000
 pop ebx
-add ebx,1 
+add ebx,1
+mov ecx,0xFED10000
 mov [ecx+0x70],ebx
 mov [ecx+0x74],ebx
 mov edx,[ecx+0x70]
 or edx,1
-mov [ecx+70],edx
+mov [ecx+0x70],edx
 ;======LONG_MODE======
 loff:
 ;======SATA======
@@ -471,7 +478,7 @@ conf:
    mov dword [0x00011FF8],0xFFC00083
    mov dword [0x00011FFC],0x00000000
    mov dword [0x00011018],0xE000019B
-   mov dword [0x0001101C],0x00000001
+   mov dword [0x0001101C],0x00000000
    mov eax,0x00010000
    mov cr3,eax
    mov ecx,0xC0000080
@@ -482,7 +489,7 @@ conf:
    mov eax,cr0
    or eax,0x80000000
    mov cr0,eax
-   jmp dword 0x08:0x00000000000e062d
+   jmp dword 0x08:long_mode
 ;=============================
 ;=============================
 ;=============================
@@ -673,7 +680,7 @@ mov [rax+15],byte 0x28
 mov [rax+16],byte 0
 mov [rax+17],dword 0
 mov [rax+21],byte 0
-mov [rax+22],word 0x0002
+mov [rax+22],word 0x0001
 mov [rax+24],byte 0
 
 mov [0x2004C],rax
