@@ -112,16 +112,16 @@ mov dx,0x0CFC
 out dx,eax
 ;======DDR-3======
 mov edi,0xE00FB000
-mov [edi+4],0xA0
+mov byte [edi+4],0xA0
 mov [edi+8],byte 0x12
 mov [edi+2],byte 0x48
 loops:
-    test [edi],2
+    test dword [edi],2
     je loops
 mov ebx,[edi+5]
 push ebx
 mov esi,0xE0000000
-mov [esi+0x48],0xFED10001
+mov dword [esi+0x48],0xFED10001
 mov ecx,0xFED10000
 mov [ecx+0x2810],dword 2 
 pop ebx
@@ -195,16 +195,16 @@ mov dx,0x0CFC
 out dx,eax
 ;======DDR-3======
 mov edi,0xE00FB000
-mov [edi+4],0xA0
+mov byte [edi+4],0xA0
 mov [edi+8],byte 0x12
 mov [edi+2],byte 0x48
 loope:
-    test [edi],2
+    test dword [edi],2
     je loope
 mov ebx,[edi+5]
 push ebx
 mov esi,0xE0000000
-mov [esi+0x48],0xFED10001
+mov dword [esi+0x48],0xFED10001
 mov ecx,0xFED10000
 mov [ecx+0x2810],dword 2 
 pop ebx
@@ -266,34 +266,34 @@ mov esp,0xFEF0FFFC
 mov ebp,esp
 ;======DDR-4======
 mov esi,0xE0000000
-mov [esi+0x48],0xFED10001
+mov dword [esi+0x48],0xFED10001
 mov ecx,0xFED10000
-mov [ecx+0x5004],0x000100A1
-mov [ecx+0x3E00],0x00000000
+mov dword [ecx+0x5004],0x000100A1
+mov dword [ecx+0x3E00],0x00000000
 mov edx,0x2710
 .loop:
     dec edx
     cmp edx,0
     jne .loop
-mov [ecx+0x3E00],0x00000003
-mov [ecx+0x4000],0x10101010
-mov [ecx+0x4008],0x00000020
-mov [ecx+0x3F04],0x86001C00
+mov dword [ecx+0x3E00],0x00000003
+mov dword [ecx+0x4000],0x10101010
+mov dword [ecx+0x4008],0x00000020
+mov dword [ecx+0x3F04],0x86001C00
 .loopz:
     mov ebx,[ecx+0x3F04]
     test ebx,0x80000000
     jne .loopz
-mov [ecx+0x3F04],0x85000000
+mov dword [ecx+0x3F04],0x85000000
 .loope:
     mov ebx,[ecx+0x3F04]
     test ebx,0x80000000
     jne .loope
-mov [ecx+0x3F04],0x81000001
+mov dword [ecx+0x3F04],0x81000001
 .loopw:
     mov ebx,[ecx+0x3F04]
     test ebx,0x80000000
     jne .loopw
-mov [ecx+0x3F04],0x80000510
+mov dword [ecx+0x3F04],0x80000510
 .loopd:
     mov ebx,[ecx+0x3F04]
     test ebx,0x80000000
@@ -339,23 +339,23 @@ mov ecx,0xFED10000
 mov edx,[ecx+0x5008]
 or edx,0x05
 mov [ecx+0x5008],edx
-mov [ecx+0x4000],0x00000000
-mov [ecx+0x4008],0x83000000
+mov dword [ecx+0x4000],0x00000000
+mov dword [ecx+0x4008],0x83000000
 .loopb:
     mov eax,[ecx+0x4008]
     test eax,0x80000000
     jne .loopb
-mov [ecx+0x4008],0x82000000
+mov dword [ecx+0x4008],0x82000000
 .loopg:
     mov eax,[ecx+0x4008]
     test eax,0x80000000
     jne .loopg
-mov [ecx+0x4008],0x81000000
+mov dword [ecx+0x4008],0x81000000
 .loopy:
     mov eax,[ecx+0x4008]
     test eax,0x80000000
     jne .loopy
-mov [ecx+0x4008],0x80000100
+mov dword [ecx+0x4008],0x80000100
 .loopr:
     mov eax,[ecx+0x4008]
     test eax,0x80000000
@@ -383,11 +383,11 @@ or ebx,0x07
 mov [eax],ebx
 ;======LPC======
 mov eax,0xE00F8040
-mov [eax],0x00700010
-mov [eax+4],0x00700010
+mov dword [eax],0x00700010
+mov dword [eax+4],0x00700010
 ;======PMBASE======
 mov eax,0xE00F8060
-mov [eax],0x00000501
+mov dword [eax],0x00000501
 ;======PCI_COMM======
 mov eax,0xE00F8004
 mov ebx,[eax]
@@ -395,11 +395,11 @@ or ebx,0x00000007
 mov [eax],ebx
 ;======DDR3L======
 mov edi,0xE00FB000
-mov [edi+4],0xA0
+mov byte [edi+4],0xA0
 mov [edi+8],byte 0x12
 mov [edi+2],byte 0x48
 loopc:
-    test [edi],2
+    test dword [edi],2
     je loopc
 mov ebx,[edi+5]
 push ebx
@@ -420,8 +420,8 @@ mov edx,[esi+0x06]
 or edx,0x06
 mov [esi+0x04],edx
 mov edx,0xFE044000
-mov [edx+0x100],0x00200000
-mov [edx+0x108],0x00100000
+mov dword [edx+0x100],0x00200000
+mov dword [edx+0x108],0x00100000
 mov [edx+0x138],dword 1
 ;======SPEAKER======
 mov esi,0xFED08400
@@ -446,7 +446,7 @@ loopm:
 gpu_not_found:
     hlt
 enable:
-    mov [esi+0x10],0xD0000000
+    mov dword [esi+0x10],0xD0000000
     mov ax,[esi+0x04]
     or ax,0x0006
     mov [esi+0x04],ax
@@ -621,7 +621,7 @@ mov r15,rax
 
 mov rbx,[r15]
 mov r14,r15
-movzx rax,ebx 
+mov eax,ebx 
 add r14,rax
 
 usb_ff:
@@ -634,7 +634,7 @@ add r14,rbx
 mov rax,[r14]
 or rax,1
 mov [r14],rax
-mov [r14+0x40],0x1
+mov dword [r14+0x40],0x1
 mov rax,[r14+0x40]
 cmp rax,0
 jne ussb
@@ -657,9 +657,9 @@ mov [0x20004], dword 0x00402001
 mov [0x20008], dword 0x40000000
 mov [0x2000C], dword 0x20040
 
-mov [0x20040],0x1
-mov [0x20044],0x1
-mov [0x20048],0x001F0080
+mov dword [0x20040],0x1
+mov dword [0x20044],0x1
+mov dword [0x20048],0x001F0080
 
 lea rax,[abs usb_cbw_size]
 mov [rax],dword 0x43425355
@@ -677,7 +677,7 @@ mov [rax+22],word 0x0002
 mov [rax+24],byte 0
 
 mov [0x2004C],rax
-mov [r14+0x18],0x20000
+mov dword [r14+0x18],0x20000
 mov r12,[r14+0x00]
 or r12,0x21 
 mov [r14+0x00],r12
@@ -711,8 +711,8 @@ mov [r14+0x00],r12
 mov [0x20040],dword 0x20060
 mov [0x20060],dword 0x1
 mov [0x20064],dword 0x1
-mov [0x20068],0x02000180
-mov [0x2006C],0x00100000
+mov dword [0x20068],0x02000180
+mov dword [0x2006C],0x00100000
 
 mov r10,[r14+0x00]
 or r10,1<<6
