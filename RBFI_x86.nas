@@ -750,15 +750,16 @@ fault:
     hlt 
     jmp fault
 ;+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+mov rax,0x00100000
 call launch
+hlt
 align 8 
-rwfi_bud db 2
+rbfi_32 db 0x33, 0x32, 0x62, 0x69, 0x74, 0x73, 0x4F, 0x53
+rbfi_64 db,0x6C, 0x6F, 0x6E, 0x67, 0x6D, 0x6F, 0x64, 0x65
 launch:
-    cmp byte [rel rwfi_bud],0
-    je none
-    cmp byte [rel rwfi_bud],2
+    cmp rax, qword [rel rbfi_32]
     je launch32bit
-    cmp byte [rel rwfi_bud],3
+    cmp rax, qword [rel rbfi_64]
     je launch64bit
     ret
 ;======BOOT======
